@@ -1,0 +1,14 @@
+{
+    "users":[
+        {
+            "email":"bidtest0@test.com",
+            "password":"password123",
+            "username":"bidtestuser"
+        },
+        {
+            "email":"bidtest1@test.com",
+            "password":"password123",
+            "username":"bidtestuser"
+        }
+    ]
+}

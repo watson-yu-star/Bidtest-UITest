@@ -1,0 +1,9 @@
+{
+    "address":{
+    "fullName": "bidtestuser",
+    "email": "bidtestuser@example.com",
+    "street": "660 Great South Road",
+    "city": "Auckland",
+    "postCode": "1050" 
+    }
+}
