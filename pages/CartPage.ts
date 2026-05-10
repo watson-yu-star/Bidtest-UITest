@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test';
+import {product} from '../test-data/product.json';
 
 export class CartPage {
 
@@ -32,9 +33,18 @@ export class CartPage {
         await this.clearCartButtonElement.click();
     }
      async findProductInCart(productName:string): Promise<boolean>{
-        console.log("cart  "+productName);
+        
         const row = this.page.getByRole('row').filter({ hasText: productName });
         await expect(row).toBeVisible();
+        const unittestid = "cart-unit-price-"+product.productId;
+        const unitprice = await row.getByTestId(unittestid).innerText();
+        expect( parseFloat(unitprice.replace(/[^0-9.]/g, ''))).toEqual(product.unitPrice);
+        const qtytestid = "cart-qty-"+product.productId;
+        const quantity = await row.getByTestId(qtytestid).inputValue();
+        expect(parseInt(quantity)).toEqual(1);
+        const linetotaltestid = "cart-line-total-"+product.productId;
+        const linetotal = await row.getByTestId(linetotaltestid).innerText();
+        expect( parseFloat(unitprice.replace(/[^0-9.]/g, ''))).toBeCloseTo(product.unitPrice*parseInt(quantity));
         return true;
      }
     async removeProductFromCart(productName: string) {
@@ -63,36 +73,32 @@ export class CartPage {
         await expect(this.cartSummaryElement.getByTestId('cart-subtotal')).toBeVisible();
         await expect(this.cartSummaryElement.getByTestId('cart-gst')).toBeVisible();
         await expect(this.cartSummaryElement.getByTestId('cart-total')).toBeVisible();
-
+        
+        const calculatedsubTotal:Number= await this.calculateExpectedSubTotal();
         const subtotal:number= await this.getSubtotal();
-        expect(subtotal).toBeGreaterThan(0);
+        expect(subtotal).toBeCloseTo(calculatedsubTotal.valueOf());
         const gst = subtotal*0.15;
         expect(await this.getGst()).toBeGreaterThan(0);
+
+
         console.log("Error: gst is not right expected gst is "+gst);
 
     }
-   async calculateExpectedTotal() {
+   async calculateExpectedSubTotal():Promise<Number> {
 
 
       const priceCells = this.page.locator('table tbody tr td:nth-child(4)');
 
-      // 2. Grab all texts at once (this waits for the elements to appear)
+      
         const priceTexts = await priceCells.allInnerTexts();
 
-    // 3. Use .reduce() to clean and sum the numbers
-       const calculatedTotal = priceTexts.reduce((sum, text) => {
+       const calculatedsubTotal = priceTexts.reduce((sum, text) => {
          const numericValue = parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
           return sum + numericValue;
         }, 0);
 
-        console.log(`Calculated Total: ${calculatedTotal}`);
-       const subtotal = await this.getSubtotal();
-       const gst = await this.getGst();
-       expect.soft(calculatedTotal).toBeCloseTo(subtotal, 2);
+        console.log(`Calculated Total: ${calculatedsubTotal}`);
+       return calculatedsubTotal;
 
-       expect.soft(gst).toBeCloseTo(subtotal * 0.15, 2);
-       console.log(`Calculated Total: ${calculatedTotal}, GST: ${gst}, Subtotal: ${subtotal}`); 
-       const total = await this.getTotal();
-       expect.soft(calculatedTotal + gst).toBeCloseTo(total, 2);
     }
 }

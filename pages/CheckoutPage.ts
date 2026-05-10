@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test';
+import {product} from "../test-data/product.json"
 
 export class CheckoutPage {
 
@@ -10,16 +11,22 @@ export class CheckoutPage {
     private readonly postcodeInputElement:Locator;
     private readonly placeOrderButton:Locator;
     private readonly orderSummaryElement:Locator;
+    private readonly subtotalEleemnt:Locator;
+    private readonly gstElement:Locator;
+    private readonly totalElement:Locator;
 
     constructor(private page:Page){
         this.checkoutPageUrl = "checkout";
-        this.nameInputElement = this.page.getByLabel('Full name');
-        this.emailInputElement = this.page.getByLabel('Email');
-        this.streetInputElement = this.page.getByLabel('Street address');
-        this.cityInputElement = this.page.getByLabel('city');
-        this.postcodeInputElement = this.page.getByTestId('checkout-postcode');
-        this.placeOrderButton = this.page.getByTestId('checkout-submit');
-        this.orderSummaryElement = this.page.getByTestId("checkout-summary");
+        this.nameInputElement = page.getByLabel('Full name');
+        this.emailInputElement = page.getByLabel('Email');
+        this.streetInputElement = page.getByLabel('Street address');
+        this.cityInputElement = page.getByLabel('city');
+        this.postcodeInputElement = page.getByTestId('checkout-postcode');
+        this.placeOrderButton = page.getByTestId('checkout-submit');
+        this.orderSummaryElement = page.getByTestId("checkout-summary");
+        this.subtotalEleemnt = page.getByTestId("checkout-subtotal");
+        this.gstElement = page.getByTestId("checkout-gst");
+        this.totalElement = page.getByTestId("checkout-total");
     }
 
     async fillContactInfo(name:string,email:string,street:string,city:string,postcode:string){
@@ -36,9 +43,13 @@ export class CheckoutPage {
     }
 
     async checkOrderSummary(){
-        await expect(this.page.getByTestId("checkout-summary")).toBeVisible();
-        await expect(this.page.getByTestId("checkout-subtotal")).toBeVisible();
-        await expect(this.page.getByTestId("checkout-gst")).toBeVisible();
+
+        await expect(this.orderSummaryElement).toBeVisible();
+        const checkoutLineTestId = "checkout-line-"+product.productId;
+        await expect(this.page.getByTestId(checkoutLineTestId)).toBeVisible();
+        await expect(this.subtotalEleemnt).toBeVisible();
+        await expect(this.gstElement).toBeVisible();
+        await expect(this.totalElement).toBeVisible();
         
     }
     

@@ -45,10 +45,11 @@ export class HomePage {
 
         console.log(productName);
 
-        await this.page.locator('.product-card') 
+        const addButton=await this.page.locator('.product-card') 
               .filter({ hasText: productName })
-              .getByRole('button', { name: 'Add to cart' })
-              .click();
+              .getByRole('button', { name: 'Add to cart' });
+        await expect(addButton).toBeEnabled();
+        await  addButton.click();
        
     }
     async loginToBuy(productName: string) {
@@ -82,13 +83,13 @@ export class HomePage {
 
     async searchProduct(productName:string){
        
-        
+        /*
       this.page.on('response', response => {
         if (response.url().includes('/products')) {
             console.log(`>> Intercepted: ${response.url()} | Status: ${response.status()}`);
             }
         });
-
+       */
     
       await this.searchBarElement.fill(productName); 
       
@@ -98,7 +99,7 @@ export class HomePage {
 
     async findProduct(productName:string){
             
-        console.log(productName);
+       // console.log(productName);
         
         await expect(this.page.getByTestId('filter-summary')).toBeVisible();
 

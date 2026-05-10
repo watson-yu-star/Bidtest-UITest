@@ -18,10 +18,13 @@ You need the following installed locally. Exact versions are suggestions – any
 
 ```bash
 # Clone or unzip the repo, then:
-cd UITest
+cd Bidtest-UITest
 
 # Install the dependencies for the api test project
 npm install
+# Install the browsers
+npx playwright install
+
 ```
 
 ## 3. Running the test

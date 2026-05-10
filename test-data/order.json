@@ -1,0 +1,20 @@
+{
+    "order":{
+        "userId": "078f5003-f966-4c8b-a6d8-e4256dea2f3b",
+        "items": [
+            {
+            "productId": "p-002",
+            "quantity": 1,
+            "name": "Free-Range Chicken Breast",
+            "unit": "1kg",
+            "unitPrice": 18.9,
+            "lineTotal": 18.9,
+            "imageUrl": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=600"
+            }
+        ],
+    "subtotal": 18.9,
+    "gst": 2.36,
+    "total": 21.26,
+    "updatedAt": "2026-05-10T22:20:50.227Z"
+    }
+}

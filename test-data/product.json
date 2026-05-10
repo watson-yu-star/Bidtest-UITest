@@ -1,7 +1,8 @@
-{
-    "name":"Free-Range Chicken Breast",
-    "unitPrice": 18.90,
-    "unit": "1kg",
-    "category": "Meat & Poultry",
-    "productId": "p-001"
+{  "product":{
+      "name":"Free-Range Chicken Breast",
+        "unitPrice": 18.90,
+        "unit": "1kg",
+        "category": "Meat & Poultry",
+        "productId": "p-002"
+    }
 }
