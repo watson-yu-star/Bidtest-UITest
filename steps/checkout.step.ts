@@ -5,6 +5,7 @@ import { expect } from '@playwright/test';
 import {users} from '../test-data/users.json';
 import { CartPage } from '../pages/CartPage';
 import {address} from '../test-data/address.json'
+import {order} from '../test-data/order.json'
 
 
 import { Given, When, Then } from '../fixtures/fixture'
@@ -32,4 +33,5 @@ Then('the user should order successfully', async ({checkoutPage}) => {
   // Step: Then the user should order successfully
   // From: features\e2e.feature:20:9
     await checkoutPage.checkOrderConfirmed();
+    
 });

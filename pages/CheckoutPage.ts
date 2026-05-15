@@ -1,5 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test';
 import {product} from "../test-data/product.json"
+import {order}  from "../test-data/order.json"
 
 export class CheckoutPage {
 
@@ -14,6 +15,7 @@ export class CheckoutPage {
     private readonly subtotalEleemnt:Locator;
     private readonly gstElement:Locator;
     private readonly totalElement:Locator;
+    private readonly orderTotalElement:Locator;
 
     constructor(private page:Page){
         this.checkoutPageUrl = "checkout";
@@ -27,6 +29,7 @@ export class CheckoutPage {
         this.subtotalEleemnt = page.getByTestId("checkout-subtotal");
         this.gstElement = page.getByTestId("checkout-gst");
         this.totalElement = page.getByTestId("checkout-total");
+        this.orderTotalElement= page.getByTestId("order-total");
     }
 
     async fillContactInfo(name:string,email:string,street:string,city:string,postcode:string){
@@ -55,5 +58,9 @@ export class CheckoutPage {
     
     async checkOrderConfirmed(){
         await expect(this.page.getByText('Order confirmed')).toBeVisible();
+        const total = await this.orderTotalElement.innerText();
+        const numericTotal = parseFloat(total.replace(/[^0-9.]/g, '')) || 0;
+        expect(numericTotal).toEqual(order.total);
     }
+
 }
