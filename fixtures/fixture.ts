@@ -7,6 +7,9 @@ import { LoginPage } from '../pages/LoginPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 
+export interface ScenarioContext {
+  interceptedResponse?: any;
+}
 
 type MyFixtures = {
     registerPage: RegisterPage;
@@ -15,7 +18,10 @@ type MyFixtures = {
     cartPage: CartPage;
     checkoutPage:CheckoutPage;
     $testInfo: TestInfo;
+    scenarioContext:ScenarioContext;
 };
+
+
 
 export const test = base.extend<MyFixtures>({
   registerPage: async ({ page }, use) => {
@@ -35,6 +41,9 @@ export const test = base.extend<MyFixtures>({
   },
   $testInfo: async ({}, use, testInfo) => {
     await use(testInfo);
+  },
+  scenarioContext: async({},use)=>{
+    await use ({});
   }
 });
 

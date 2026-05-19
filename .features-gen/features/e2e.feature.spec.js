@@ -3,18 +3,18 @@ import { test } from "../../fixtures/fixture.ts";
 
 test.describe('e2e test', () => {
 
-  test('Login and add product to cart', { tag: ['@e2e'] }, async ({ Given, When, Then, And, cartPage, checkoutPage, homePage, loginPage, page }) => { 
+  test('Login and add product to cart', { tag: ['@e2e'] }, async ({ Given, When, Then, And, cartPage, checkoutPage, homePage, loginPage, page, scenarioContext }) => { 
     await Given('the user navigates to homepage', null, { page }); 
     await When('the user clicks the login button from the navbar', null, { homePage }); 
     await Then('the user navigates to login page', null, { page }); 
     await When('the user inputs his email and password', null, { loginPage }); 
     await And('the user clicks the login button', null, { loginPage }); 
     await Then('the user should login successfully and land on the homepage', null, { homePage }); 
-    await When('the user add product "Free-Range Chicken Breast" into cart', null, { homePage }); 
+    await When('the user add product "Free-Range Chicken Breast" into cart', null, { homePage, page, scenarioContext }); 
     await Then('the user should see redicon "1" on the cart', null, { homePage }); 
     await When('the user click the cart button from the navbar', null, { homePage }); 
     await Then('the user should navigate to cart page', null, { page }); 
-    await Then('the user should see the product "Free-Range Chicken Breast"', null, { cartPage }); 
+    await Then('the user should see the product "Free-Range Chicken Breast"', null, { cartPage, scenarioContext }); 
     await When('the user click contine to check button', null, { cartPage }); 
     await Then('the user should navigate to checkout page', null, { page }); 
     await Then('the user should see the order summary', null, { checkoutPage }); 
@@ -23,18 +23,18 @@ test.describe('e2e test', () => {
     await Then('the user should order successfully', null, { checkoutPage }); 
   });
 
-  test('Add product to cart without Login', { tag: ['@e2e'] }, async ({ Given, When, Then, And, cartPage, checkoutPage, homePage, loginPage, page }) => { 
+  test('Add product to cart without Login', { tag: ['@e2e'] }, async ({ Given, When, Then, And, cartPage, checkoutPage, homePage, loginPage, page, scenarioContext }) => { 
     await Given('the user navigates to homepage', null, { page }); 
     await When('the user click the Log in to buy button on product "Free-Range Chicken Breast"', null, { homePage }); 
     await Then('the user navigates to login page', null, { page }); 
     await When('the user inputs his email and password', null, { loginPage }); 
     await And('the user clicks the login button', null, { loginPage }); 
     await Then('the user should login successfully and land on the homepage', null, { homePage }); 
-    await When('the user add product "Free-Range Chicken Breast" into cart', null, { homePage }); 
+    await When('the user add product "Free-Range Chicken Breast" into cart', null, { homePage, page, scenarioContext }); 
     await Then('the user should see redicon "1" on the cart', null, { homePage }); 
     await When('the user click the cart button from the navbar', null, { homePage }); 
     await Then('the user should navigate to cart page', null, { page }); 
-    await Then('the user should see the product "Free-Range Chicken Breast"', null, { cartPage }); 
+    await Then('the user should see the product "Free-Range Chicken Breast"', null, { cartPage, scenarioContext }); 
     await When('the user click contine to check button', null, { cartPage }); 
     await Then('the user should navigate to checkout page', null, { page }); 
     await Then('the user should see the order summary', null, { checkoutPage }); 

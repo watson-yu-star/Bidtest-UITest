@@ -1,5 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test';
 import {product} from '../test-data/product.json';
+import { ScenarioContext } from '../fixtures/fixture';
 
 export class CartPage {
 
@@ -69,16 +70,21 @@ export class CartPage {
         const row = table.getByRole('row').filter({ hasText: productName });
         return await row.isVisible();
     }
-    async checkCartSummary(){
+    async checkCartSummary(scenerioContext:ScenarioContext){
         await expect(this.cartSummaryElement.getByTestId('cart-subtotal')).toBeVisible();
         await expect(this.cartSummaryElement.getByTestId('cart-gst')).toBeVisible();
         await expect(this.cartSummaryElement.getByTestId('cart-total')).toBeVisible();
+
+        const cartResponse = scenerioContext.interceptedResponse;
+        
         
         const calculatedsubTotal:Number= await this.calculateExpectedSubTotal();
         const subtotal:number= await this.getSubtotal();
         expect(subtotal).toBeCloseTo(calculatedsubTotal.valueOf());
+        expect(subtotal).toEqual(cartResponse.subtotal);
         const gst = subtotal*0.15;
         expect(await this.getGst()).toBeGreaterThan(0);
+        expect(await this.getGst()).toEqual(cartResponse.gst);
 
 
         console.log("Error: gst is not right expected gst is "+gst);

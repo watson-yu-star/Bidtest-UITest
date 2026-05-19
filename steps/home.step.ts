@@ -33,11 +33,18 @@ Then('the user navigates to login page', async ({page}) => {
     
 });
 
-When('the user add product {string} into cart', async ({homePage}, productName: string) => {
+When('the user add product {string} into cart', async ({page,homePage,scenarioContext}, productName: string) => {
   // Step: When the user add product "Free-Range Chicken Breast" into cart
   // From: features\e2e.feature:10:9
-    await homePage.addProductToCart(productName);
 
+    const responsePromise = page.waitForResponse(/\/cart\/items/);
+    await homePage.addProductToCart(productName);
+    
+    const response = await responsePromise;
+    
+    scenarioContext.interceptedResponse = await response.json();
+    console.log("scenarioContext:"+ scenarioContext.interceptedResponse.subtotal);
+  
 });
 
 Then('the user should see redicon {string} on the cart', async ({homePage}, iconText: string) => {

@@ -4,6 +4,7 @@ import { HomePage } from '../pages/HomePage';
 import { expect } from '@playwright/test';
 import {users} from '../test-data/users.json';
 import { CartPage } from '../pages/CartPage';
+import { ScenarioContext } from '../fixtures/fixture';
 
 
 import { Given, When, Then } from '../fixtures/fixture'
@@ -15,11 +16,11 @@ import { Given, When, Then } from '../fixtures/fixture'
  });
 
 
- Then('the user should see the product {string}', async ({cartPage},productName:string) => {
+ Then('the user should see the product {string}', async ({cartPage,scenarioContext},productName:string) => {
   
    await cartPage.findProductInCart(productName);
    //cartPage.calculateExpectedTotal();
-    await cartPage.checkCartSummary();
+    await cartPage.checkCartSummary(scenarioContext);
 });;
 
 
