@@ -35,6 +35,8 @@ export class HomePage {
      async waitForHomePage() {
         await expect(this.shopButtonElement).toBeVisible();
         await expect(this.cartButtonElement).toBeVisible();
+
+        await this.page.waitForLoadState('networkidle');
     }
     async loginCheck(username: string) {
         await expect(this.accountElement).toBeVisible();

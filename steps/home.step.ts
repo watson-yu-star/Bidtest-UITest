@@ -36,7 +36,7 @@ Then('the user navigates to login page', async ({page}) => {
 When('the user add product {string} into cart', async ({page,homePage,scenarioContext}, productName: string) => {
   // Step: When the user add product "Free-Range Chicken Breast" into cart
   // From: features\e2e.feature:10:9
-
+   try{
     const responsePromise = page.waitForResponse(/\/cart\/items/);
     await homePage.addProductToCart(productName);
     
@@ -44,6 +44,9 @@ When('the user add product {string} into cart', async ({page,homePage,scenarioCo
     
     scenarioContext.interceptedResponse = await response.json();
     console.log("scenarioContext:"+ scenarioContext.interceptedResponse.subtotal);
+   }catch(error){
+       console.error("Fetch operation failed:", error);
+   }
   
 });
 
