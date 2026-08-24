@@ -62,5 +62,7 @@ export class CheckoutPage {
         const numericTotal = parseFloat(total.replace(/[^0-9.]/g, '')) || 0;
         expect(numericTotal).toEqual(order.total);
     }
-
+    async checkUrlContainsCheckout(){
+        await expect(this.page).toHaveURL(/\/checkout/);
+    }
 }

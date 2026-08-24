@@ -3,9 +3,9 @@ import { test } from "../../fixtures/fixture.ts";
 
 test.describe('cart', () => {
 
-  test('Navgate to cart page', { tag: ['@cart'] }, async ({ Given, When, page }) => { 
-    await Given('the user navigates to homepage', null, { page }); 
-    await When('the user clicks the cart button on the navbar', null, { page }); 
+  test('Navgate to cart page', { tag: ['@cart'] }, async ({ Given, When, homePage }) => { 
+    await Given('the user navigates to homepage', null, { homePage }); 
+    await When('the user clicks the cart button on the navbar', null, { homePage }); 
   });
 
 });

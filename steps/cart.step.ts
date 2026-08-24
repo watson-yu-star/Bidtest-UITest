@@ -10,8 +10,8 @@ import { ScenarioContext } from '../fixtures/fixture';
 import { Given, When, Then } from '../fixtures/fixture'
 
 
- When("the user clicks the cart button on the navbar",async({page})=>{
-    await page.getByTestId('nav-cart').click();
+ When("the user clicks the cart button on the navbar",async({homePage})=>{
+    await homePage.navigateToCart();
 
  });
 
@@ -31,10 +31,10 @@ When('the user click contine to check button', async ({cartPage}) => {
  
 });
 
-Then('the user should navigate to checkout page', async ({page}) => {
+Then('the user should navigate to checkout page', async ({checkoutPage,page}) => {
   // Step: Then the user should navigate to checkout page
   // From: features\e2e.feature:16:9
-  await expect(page).toHaveURL(/\/checkout/);
+  await checkoutPage.checkUrlContainsCheckout();
   console.log('landing on checkout page')
 });
 

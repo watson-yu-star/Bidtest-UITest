@@ -9,13 +9,13 @@ import { CartPage } from '../pages/CartPage';
 import { Given, When, Then } from '../fixtures/fixture'
 
 
-Given('the user navigates to homepage', async ({page}) => {
+Given('the user navigates to homepage', async ({homePage}) => {
 
-  const homePage = new HomePage(page);
-  homePage.navigateToHomePage();
+  // const homePage = new HomePage(page);
+  await homePage.navigateToHomePage();
   
   await homePage.waitForHomePage();
-  await page.waitForLoadState('networkidle');
+  //await page.waitForLoadState('networkidle');
 });
 
 When('the user clicks the login button from the navbar', async ({homePage}) => {
@@ -23,7 +23,7 @@ When('the user clicks the login button from the navbar', async ({homePage}) => {
   // From: features\e2e.feature:8:9
   await homePage.clickLoginButton();
 });
-
+ 
 Then('the user navigates to login page', async ({page}) => {
 
     expect(page).toHaveURL(/\/login/);

@@ -3,14 +3,14 @@ import { test } from "../../fixtures/fixture.ts";
 
 test.describe('search', () => {
 
-  test('Search product name', { tag: ['@search'] }, async ({ Given, When, Then, homePage, page }) => { 
-    await Given('the user navigates to homepage', null, { page }); 
+  test('Search product name', { tag: ['@search'] }, async ({ Given, When, Then, homePage }) => { 
+    await Given('the user navigates to homepage', null, { homePage }); 
     await When('the user input the prodct "tomatoes" into search bar', null, { homePage }); 
     await Then('the user should see the product "tomatoes" in the result', null, { homePage }); 
   });
 
-  test('Filter product by category', { tag: ['@search'] }, async ({ Given, When, Then, homePage, page }) => { 
-    await Given('the user navigates to homepage', null, { page }); 
+  test('Filter product by category', { tag: ['@search'] }, async ({ Given, When, Then, homePage }) => { 
+    await Given('the user navigates to homepage', null, { homePage }); 
     await When('the user select "Beverages" from the dropdown list', null, { homePage }); 
     await Then('the user should see the products from category "Beverages" in the result', null, { homePage }); 
   });
